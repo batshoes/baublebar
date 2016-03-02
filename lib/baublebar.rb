@@ -1,5 +1,7 @@
 require "baublebar/version"
 
 module Baublebar
-  # Your code goes here...
+  class GetTickets
+
+  end
 end
