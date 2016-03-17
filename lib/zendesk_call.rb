@@ -17,8 +17,10 @@ class GetTicketRequest
     @tickets.each {|ticket| 
 
       ticket_hash = Hash[ticket]
+      
       if ticket_hash['result_type'] == "ticket" &&
-          ticket_hash['requester_id'] == @user_id
+           ticket_hash['requester_id'] == @user_id
+        
         ticket_hash['zendesk_url'] = ticket_hash['url']
                                       .chomp(".json")
         ticket_array << ticket_hash
