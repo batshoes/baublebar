@@ -1,6 +1,5 @@
 require "baublebar/version"
 require_relative 'zendesk_call'
-require 'pry'
 
 module Baublebar
   class GetZenDeskTickets

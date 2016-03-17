@@ -1,5 +1,4 @@
 require 'zendesk_api'
-require 'pry'
 class GetUserRequest
   def call(email)
     client.users.search(:query => "#{email}").first
@@ -9,41 +8,38 @@ end
 class GetTicketRequest
   def call(email, user_id)
     @user_id = user_id
-    @tickets = client.search(:query => "#{email}",
-                            :reload => "true")
-                              .fetch!
-    parse_tickets(@tickets)
+    @tickets = client.search(:query => "#{email}")
+    parse_tickets
   end
 
-  private
+  def parse_tickets
+    ticket_array = []
+    @tickets.each {|ticket| 
 
-  def parse_tickets(tickets)
-    @ticket_array = []
-    tickets.each {|ticket| 
+      ticket_hash = Hash[ticket]
+      if ticket_hash['result_type'] == "ticket" &&
+          ticket_hash['requester_id'] == @user_id
+        ticket_hash['zendesk_url'] = ticket_hash['url']
+                                      .chomp(".json")
+        ticket_array << ticket_hash
+      end
+    }
 
-    ticket_hash = Hash[ticket]
-    if ticket_hash['result_type'] == "ticket" &&
-        ticket_hash['requester_id'] == @user_id
-      ticket_hash['zendesk_url'] = ticket_hash['url'].chomp(".json")
-      @ticket_array << ticket_hash
-    end
+    ticket_array = ticket_array.sort_by { |hsh| hsh['id'] } .reverse  
 
-  }
-
-
-    @ticket_array = @ticket_array.sort_by { |hsh| hsh['id'] } .reverse
-
-    @ticket_array[0..2]
+    ticket_array[0..2]
   end
 end
  
 private
 
+
+
 def client
   ZendeskAPI::Client.new do |config|
     # Mandatory:
 
-    config.url = "https://testapp1.zendesk.com/api/v2" # e.g. https://mydesk.zendesk.com/api/v2
+    config.url = "#{ENV['ZENDESK_URL']}" # e.g. https://mydesk.zendesk.com/api/v2
 
     # Basic / Token Authentication
     config.username = "#{ENV['ZENDESK_LOGIN_EMAIL']}"

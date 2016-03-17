@@ -26,7 +26,7 @@ RSpec.describe Baublebar::GetZenDeskTickets do
                               result_type: "ticket",
                               zendesk_url: "https://someurl.com/8"
                             }
-                              ]}
+                          ]}
 
 
     let(:raw_user_response) {'{"users"=>[{ "id"=>4980494598,"url"=>"https://testapp1.zendesk.com/api/v2/users/4980494598.json","name"=>"Barry Allen","email"=>"email@email.com","created_at"=>2016-02-24 20:59:42 UTC,"updated_at"=>2016-02-24 20:59:42 UTC,"time_zone"=>"Bogota","phone"=>nil,"photo"=>nil,"chat_only"=>false,"user_fields"=>{}}],"next_page"=>nil,"previous_page"=>nil,"count"=>1}'}
@@ -38,7 +38,7 @@ RSpec.describe Baublebar::GetZenDeskTickets do
 
       allow_any_instance_of(GetUserRequest)
         .to receive(:call)
-          .and_return(raw_user_response)
+          .and_return(raw_user_response.to_json)
       
     end
 
