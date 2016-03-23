@@ -8,7 +8,7 @@ end
 class GetTicketRequest
   def call(email, user_id)
     @user_id = user_id
-    @tickets = client.search(:query => "#{email}", :reload => 'true')
+    @tickets = client.search(:query => "#{email}", :reload => true)
     parse_tickets
   end
 
