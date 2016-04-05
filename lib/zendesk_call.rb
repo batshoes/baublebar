@@ -28,8 +28,14 @@ class GetTicketRequest
     }
 
     ticket_array = ticket_array.sort_by { |hsh| hsh['id'] } .reverse  
-
-    ticket_array[0..2]
+    
+    if ticket_array.length == 0
+      "No Tickets Available"
+    elsif ticket_array.length < 3
+      ticket_array
+    else
+      ticket_array[0..2]
+    end
   end
 end
  
