@@ -6,7 +6,7 @@ module Baublebar
 
     def get_tickets(email)
       @user = GetUserRequest.new.call(email)
-      if @user == nil || "" || []
+      if @user == nil
         "No User Available..."
       else
         @user_id = @user['id']
