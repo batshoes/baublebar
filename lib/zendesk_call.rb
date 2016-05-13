@@ -54,7 +54,7 @@ def client
 
     # Choose one of the following depending on your authentication choice
     config.token = "#{ENV['ZENDESK_API_KEY']}"
-    config.password = "#{ENV['ZENDESK_LOGIN_PASSWORD']}"
+    # config.password = "#{ENV['ZENDESK_LOGIN_PASSWORD']}"
 
     # OAuth Authentication
     # config.access_token = "your OAuth access token"
