@@ -98,7 +98,7 @@ RSpec.describe Baublebar::GetZenDeskTickets do
 
   context "when no user is available" do
     let(:email) {"new_email@email.com"}
-    let(:no_user) {nil}
+    let(:no_user) {{"users"=>[], "next_page"=>nil, "previous_page"=>nil, "count"=>0}}
 
     before do
 
